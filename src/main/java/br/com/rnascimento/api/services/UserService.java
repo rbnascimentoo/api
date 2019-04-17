@@ -33,8 +33,12 @@ public class UserService {
 	} 
 
 	public UserDTO findById(Long id) {
+		UserDTO userDTO = new UserDTO();
 		Optional<User> user = this.userRepository.findById(id);
-		return ModelMapperUtil.converter(user, UserDTO.class);
+		if(user.isPresent()) {
+			userDTO = ModelMapperUtil.converter(user.get(), UserDTO.class);
+		}
+		return userDTO;
 	}
 
 	public void deleteById(Long id) {

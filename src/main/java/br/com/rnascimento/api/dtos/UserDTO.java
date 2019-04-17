@@ -1,7 +1,6 @@
 package br.com.rnascimento.api.dtos;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +22,7 @@ public class UserDTO implements Serializable {
 	
 	private Long id;
 	private String name;
-	private LocalDate createDate;
-	private LocalDate updateDate;
+//	private LocalDate createDate;
+//	private LocalDate updateDate;
 	
 }
