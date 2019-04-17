@@ -1,15 +1,12 @@
 package br.com.rnascimento.api.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -37,23 +34,23 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 255)
 	@NotEmpty(message = "The name can not is empty.")
 	private String name;
 	
-	@Column(nullable = false)
-	private LocalDate createDate;
+//	@Column
+//	private LocalDate createDate;
 	
-	@Column(nullable = false)
-	private LocalDate updateDate;
+//	@Column
+//	private LocalDate updateDate;
 	
-	@PrePersist
-	public void prePersist() {
-		this.createDate = LocalDate.now();
-	}
+//	@PrePersist
+//	public void prePersist() {
+//		this.createDate = LocalDate.now();
+//	}
 	
-	@PreUpdate
-	public void preUpdate() {
-		this.updateDate = LocalDate.now();
-	}
+//	@PreUpdate
+//	public void preUpdate() {
+//		this.updateDate = LocalDate.now();
+//	}
 }

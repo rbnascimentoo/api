@@ -1,7 +1,5 @@
 package br.com.rnascimento.api;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -9,10 +7,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class ApiApplication {
 	
-	private static final Logger LOG = LogManager.getLogger();
+//	private static final Logger LOG = LogManager.getLogger();
 
 	public static void main(String[] args) {
-		LOG.info("### Iniciando o serviço... ###");
+//		LOG.info("### Iniciando o serviço... ###");
 		SpringApplication.run(ApiApplication.class, args);
 	}
 
