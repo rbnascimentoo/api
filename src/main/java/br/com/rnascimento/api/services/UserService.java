@@ -18,6 +18,11 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	/**
+	 * Find all User.
+	 * 
+	 * @return List<UserDTO>
+	 */
 	public List<UserDTO> findAll() {
 		List<User> listUser = this.userRepository.findAll();
 		if(listUser.isEmpty() || listUser == null) {
@@ -26,12 +31,24 @@ public class UserService {
 		return ModelMapperUtil.converter(listUser, UserDTO.class);
 	}
 
+	/**
+	 * Save a new User or Update an existing User. 
+	 * 
+	 * @param userDto
+	 * @return UserDTO
+	 */
 	public UserDTO saveOrUpdate(UserDTO userDto) {
 		User user = ModelMapperUtil.converter(userDto, User.class);
 		user = this.userRepository.save(user);
 		return ModelMapperUtil.converter(user, UserDTO.class);
 	} 
 
+	/**
+	 * Find a User.
+	 * 
+	 * @param id
+	 * @return UserDTO
+	 */
 	public UserDTO findById(Long id) {
 		UserDTO userDTO = new UserDTO();
 		Optional<User> user = this.userRepository.findById(id);
@@ -41,6 +58,11 @@ public class UserService {
 		return userDTO;
 	}
 
+	/**
+	 * Delete a User.
+	 * 
+	 * @param id
+	 */
 	public void deleteById(Long id) {
 		this.userRepository.deleteById(id);
 	}

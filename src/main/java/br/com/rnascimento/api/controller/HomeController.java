@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "Fin")
 @RestController
-@RequestMapping(value = "/fin")
+@RequestMapping(value = "/fin-api")
 public class HomeController {
 
 	@ApiOperation(value = "Initial Method")
