@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<ehcache xsi:noNamespaceSchemaLocation="ehcache.xsd"
+	updateCheck="true" monitoring="autodetect" dynamicConfig="true">
+	
+	<!-- Cache User -->
+	<cache name="findAllUser" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<cache name="findByIdUser" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<!-- Cache Category -->
+	<cache name="findAllCategory" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<cache name="findByIdCategory" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<!-- Cache SubCategory -->
+	<cache name="findAllSubCategory" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<cache name="findByIdSubCategory" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<!-- Cache Expense -->
+	<cache name="findAllExpense" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
+	<cache name="findByIdExpense" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+</ehcache>

@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.ToString;
 @Table(name = "expense")
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -43,12 +45,12 @@ public class Expense implements Serializable {
 	@Column
 	private String description;
 	
-	@JoinColumn(name = "idCategory")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 	
-//	@JoinColumn(name = "idTag")
-//	@OneToMany
-//	private List<Tags> tags;
+	@JoinColumn
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User user;
 	
 }

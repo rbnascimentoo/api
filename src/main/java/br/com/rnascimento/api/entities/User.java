@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.ToString;
 @Table(name = "user")
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -38,19 +40,4 @@ public class User implements Serializable {
 	@NotEmpty(message = "The name can not is empty.")
 	private String name;
 	
-//	@Column
-//	private LocalDate createDate;
-	
-//	@Column
-//	private LocalDate updateDate;
-	
-//	@PrePersist
-//	public void prePersist() {
-//		this.createDate = LocalDate.now();
-//	}
-	
-//	@PreUpdate
-//	public void preUpdate() {
-//		this.updateDate = LocalDate.now();
-//	}
 }

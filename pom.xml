@@ -47,30 +47,35 @@
 		<!-- <groupId>org.flywaydb</groupId> -->
 		<!-- <artifactId>flyway-core</artifactId> -->
 		<!-- </dependency> -->
+		<!-- Documentação de API com Swagger -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.7.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>2.6.2</version>
-		</dependency>
-		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
 		</dependency>
+		<!-- Pool de conexões com Hikari -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+		<!-- Cache Com Ecache -->
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 		</dependency>
+		<!-- Transformando DTO's em Entity's ou virse e versa com ModelMapper -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.2</version>
 		</dependency>
+		<!-- Escrevendo menos códigos com Lombook -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -90,13 +95,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<!-- Testes Unitários com JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+		<!-- Mocks com Mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -105,7 +110,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>api</finalName>
+		<finalName>fin-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

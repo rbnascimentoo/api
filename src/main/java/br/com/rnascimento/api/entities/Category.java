@@ -1,18 +1,20 @@
 package br.com.rnascimento.api.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.ToString;
 @Table(name = "category")
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -40,7 +43,8 @@ public class Category implements Serializable {
 	@NotEmpty(message = "The name can not is empty.")
 	private String name;
 	
-	@OneToMany(mappedBy = "category")
-	private List<SubCategory> listSubCategory;
+	@JoinColumn
+	@OneToOne(fetch = FetchType.EAGER)
+	private Category parentCategory;
 	
 }

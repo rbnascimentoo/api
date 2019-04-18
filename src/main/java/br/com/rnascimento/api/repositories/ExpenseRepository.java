@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.rnascimento.api.entities.User;
+import br.com.rnascimento.api.entities.Expense;
 
 @Repository
-@Transactional(readOnly = true)
-public interface UserRepository extends JpaRepository<User, Long> {
+@Transactional
+public interface ExpenseRepository extends JpaRepository<Expense, Long>{
 
 }

@@ -17,64 +17,63 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.rnascimento.api.dtos.SubCategoryDTO;
+import br.com.rnascimento.api.dtos.ExpenseDTO;
 import br.com.rnascimento.api.response.Response;
-import br.com.rnascimento.api.services.SubCategoryService;
+import br.com.rnascimento.api.services.ExpenseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "SubCategory")
+@Api(value = "expense")
 @RestController
-@RequestMapping(value = "/SubCategory")
-public class SubCategoryController {
+@RequestMapping(value = "/expense")
+public class ExpenseController {
 	
 	@Autowired
-	private SubCategoryService subCategoryService;
+	private ExpenseService expenseService;
 
-	@ApiOperation(value = "Find all SubCategorys.")
+	@ApiOperation(value = "Find all expense.")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Response<List<SubCategoryDTO>>> findAll() {
-		Response<List<SubCategoryDTO>> response = new Response<List<SubCategoryDTO>>();
-		response.setData(this.subCategoryService.findAll());
+	public ResponseEntity<Response<List<ExpenseDTO>>> findAll() {
+		Response<List<ExpenseDTO>> response = new Response<List<ExpenseDTO>>();
+		response.setData(this.expenseService.findAll());
 		return ResponseEntity.ok(response);
 	}
 	
-	@ApiOperation(value = "Create a new SubCategory.")
+	@ApiOperation(value = "Create a new expense.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Response<SubCategoryDTO>> create(@Valid @RequestBody SubCategoryDTO SubCategoryDto, BindingResult result){
-		Response<SubCategoryDTO> response = new Response<SubCategoryDTO>();
+	public ResponseEntity<Response<ExpenseDTO>> create(@Valid @RequestBody ExpenseDTO expenseDTO, BindingResult result){
+		Response<ExpenseDTO> response = new Response<ExpenseDTO>();
 		if(result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.getErros().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		response.setData(this.subCategoryService.saveOrUpdate(SubCategoryDto));
+		response.setData(this.expenseService.saveOrUpdate(expenseDTO));
 		return ResponseEntity.ok(response);
 	}
 	
-	@ApiOperation(value = "Update an existing SubCategory.")
+	@ApiOperation(value = "Update an existing expense.")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Response<SubCategoryDTO>> update(@Valid @RequestBody SubCategoryDTO SubCategoryDto, BindingResult result){
-		Response<SubCategoryDTO> response = new Response<SubCategoryDTO>();
+	public ResponseEntity<Response<ExpenseDTO>> update(@Valid @RequestBody ExpenseDTO expenseDTO, BindingResult result){
+		Response<ExpenseDTO> response = new Response<ExpenseDTO>();
 		if(result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.getErros().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		response.setData(this.subCategoryService.saveOrUpdate(SubCategoryDto));
+		response.setData(this.expenseService.saveOrUpdate(expenseDTO));
 		return ResponseEntity.ok(response);
 	}
 	
-	@ApiOperation(value = "Find SubCategory by id.")
+	@ApiOperation(value = "Find expense by id.")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Response<SubCategoryDTO>> findById(@PathVariable(value = "id") Long id) {
-		Response<SubCategoryDTO> response = new Response<SubCategoryDTO>();
-		response.setData(this.subCategoryService.findById(id));
+	public ResponseEntity<Response<ExpenseDTO>> findById(@PathVariable(value = "id") Long id) {
+		Response<ExpenseDTO> response = new Response<ExpenseDTO>();
+		response.setData(this.expenseService.findById(id));
 		return ResponseEntity.ok(response);
 	}
 	
-	@ApiOperation(value = "Delete an existing SubCategory.")
+	@ApiOperation(value = "Delete an existing expense.")
 	@DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteById(@PathVariable(value = "id") Long id) {
-		this.subCategoryService.deleteById(id);
+		this.expenseService.deleteById(id);
 	}
-
 }

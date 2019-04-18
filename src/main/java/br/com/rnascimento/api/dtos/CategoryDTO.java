@@ -3,13 +3,16 @@ package br.com.rnascimento.api.dtos;
 import java.io.Serializable;
 import java.util.List;
 
+import br.com.rnascimento.api.entities.Category;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -23,5 +26,6 @@ public class CategoryDTO implements Serializable {
 	
 	private Long id;
 	private String name;
-	private List<SubCategoryDTO> listSubCategory;
+	private List<Category> listSubCategory;
+	private Category parentCategory;
 }
