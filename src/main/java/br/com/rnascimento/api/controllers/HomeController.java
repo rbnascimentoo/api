@@ -1,4 +1,4 @@
-package br.com.rnascimento.api.controller;
+package br.com.rnascimento.api.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

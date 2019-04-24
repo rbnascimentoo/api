@@ -1,4 +1,4 @@
-package br.com.rnascimento.api.controller;
+package br.com.rnascimento.api.controllers;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "expense")
 @RestController
-@RequestMapping(value = "/expense")
+@RequestMapping(value = "/fin-api/expense")
 public class ExpenseController {
 	
 	@Autowired
