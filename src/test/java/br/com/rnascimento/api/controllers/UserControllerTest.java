@@ -31,7 +31,7 @@ public class UserControllerTest {
 	@Test
 	public void findAllUsers() {
 		List<UserDTO> userDTOList = Arrays.asList(UserDTO.builder().id(1L).build(), UserDTO.builder().id(2L).build());
-		BDDMockito.when(userService.findAll()).thenReturn(userDTOList);
+		BDDMockito.when(this.userService.findAll()).thenReturn(userDTOList);
 		
 		ResponseEntity<String> response = this.restTemplate.getForEntity("/fin-api/user/", String.class);
 		
@@ -42,7 +42,7 @@ public class UserControllerTest {
 	public void findUserById() {
 		Long id = 1L;
 		UserDTO userDTO = UserDTO.builder().id(id).build();
-		BDDMockito.when(userService.findById(id)).thenReturn(userDTO);
+		BDDMockito.when(this.userService.findById(id)).thenReturn(userDTO);
 		
 		ResponseEntity<String> response = this.restTemplate.getForEntity("/fin-api/user/" + id, String.class);
 		
