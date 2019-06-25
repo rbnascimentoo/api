@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class Response<T> {
 	
 	private T data;
+	
 	private List<String> erros;
 	
 	public List<String> getErros() {
@@ -19,4 +20,5 @@ public class Response<T> {
 		}
 		return this.erros;
 	}
+	
 }

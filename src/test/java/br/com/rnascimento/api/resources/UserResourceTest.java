@@ -1,4 +1,4 @@
-package br.com.rnascimento.api.controllers;
+package br.com.rnascimento.api.resources;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,7 @@ import br.com.rnascimento.api.services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+public class UserResourceTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -33,7 +33,7 @@ public class UserControllerTest {
 		List<UserDTO> userDTOList = Arrays.asList(UserDTO.builder().id(1L).build(), UserDTO.builder().id(2L).build());
 		BDDMockito.when(this.userService.findAll()).thenReturn(userDTOList);
 		
-		ResponseEntity<String> response = this.restTemplate.getForEntity("/fin-api/user/", String.class);
+		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/", String.class);
 		
 		Assert.assertEquals(response.getStatusCodeValue(), 200);
 	}
@@ -44,7 +44,7 @@ public class UserControllerTest {
 		UserDTO userDTO = UserDTO.builder().id(id).build();
 		BDDMockito.when(this.userService.findById(id)).thenReturn(userDTO);
 		
-		ResponseEntity<String> response = this.restTemplate.getForEntity("/fin-api/user/" + id, String.class);
+		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/" + id, String.class);
 		
 		Assert.assertEquals(response.getStatusCodeValue(), 200);
 	}

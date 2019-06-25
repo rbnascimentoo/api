@@ -1,4 +1,4 @@
-package br.com.rnascimento.api.controllers;
+package br.com.rnascimento.api.resources;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "user")
 @RestController
-@RequestMapping(value = "/fin-api/user")
-public class UserController {
+@RequestMapping(value = "/user")
+public class UserResource {
 	
 	@Autowired
 	private UserService userService;
