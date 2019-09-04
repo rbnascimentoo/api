@@ -1,8 +1,10 @@
 package br.com.rnascimento.api.dtos;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import br.com.rnascimento.api.enums.Role;
+import br.com.rnascimento.api.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +30,8 @@ public class UserDTO implements Serializable {
 	private String login;
 	private String password;
 	private Role role;
+	private Date dateCreation;
+	private Date dateUpdate;
+	private State state;
 
 }

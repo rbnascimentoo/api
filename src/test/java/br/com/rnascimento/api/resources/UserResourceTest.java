@@ -51,6 +51,13 @@ public class UserResourceTest {
 	}
 	
 	@Test
+	public void deleteUserById() {
+		Long id = 1L;
+		
+		this.restTemplate.delete("/user/" + id);
+	}
+	
+	@Test
 	public void findUserByLoginAndPassword() {
 		String login = "admin";
 		String password = "admin";

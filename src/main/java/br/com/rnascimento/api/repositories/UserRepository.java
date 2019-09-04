@@ -13,7 +13,7 @@ import br.com.rnascimento.api.entities.User;
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	@Query("SELECT u FROM user u WHERE u.login = ?1 AND u.password = ?2")
+	@Query("SELECT u FROM user u WHERE u.login = ?1 AND u.password = ?2 AND u.state LIKE 'ACTIVE' ")
 	public Optional<User> login(String login, String password);
 
 }
