@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.rnascimento.api.dtos.UserDTO;
 import br.com.rnascimento.api.services.UserService;
+import br.com.rnascimento.api.utils.HashUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -45,6 +46,21 @@ public class UserResourceTest {
 		BDDMockito.when(this.userService.findById(id)).thenReturn(userDTO);
 		
 		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/" + id, String.class);
+		
+		Assert.assertEquals(response.getStatusCodeValue(), 200);
+	}
+	
+	@Test
+	public void findUserByLoginAndPassword() {
+		String login = "admin";
+		String password = "admin";
+		String passwordHash = HashUtil.getSecureHash(password);
+		
+		UserDTO userDTO = UserDTO.builder().login(login).password(password).build();
+		UserDTO userDTOReturn = UserDTO.builder().login(login).password(passwordHash).build();
+		BDDMockito.when(this.userService.login(login, password)).thenReturn(userDTOReturn);
+		
+		ResponseEntity<UserDTO> response = this.restTemplate.postForEntity("/user/login", userDTO, UserDTO.class);
 		
 		Assert.assertEquals(response.getStatusCodeValue(), 200);
 	}

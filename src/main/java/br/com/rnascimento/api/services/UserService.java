@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import br.com.rnascimento.api.dtos.UserDTO;
 import br.com.rnascimento.api.entities.User;
 import br.com.rnascimento.api.repositories.UserRepository;
+import br.com.rnascimento.api.utils.HashUtil;
 import br.com.rnascimento.api.utils.ModelMapperUtil;
 
 @Service
@@ -49,6 +50,7 @@ public class UserService {
 	public UserDTO saveOrUpdate(UserDTO userDto) {
 		LOG.info("### Saving a new User or Updating an existing User... ###");
 		User user = ModelMapperUtil.converter(userDto, User.class);
+		user.setPassword(HashUtil.getSecureHash(user.getPassword()));
 		user = this.userRepository.save(user);
 		return ModelMapperUtil.converter(user, UserDTO.class);
 	} 
@@ -79,5 +81,18 @@ public class UserService {
 	public void deleteById(Long id) {
 		LOG.info("### Deleting a User... ###");
 		this.userRepository.deleteById(id);
+	}
+	
+	public UserDTO login(String login, String password) {
+		LOG.info("### Find a User... ###");
+		UserDTO userDTO = new UserDTO();
+		
+		password = HashUtil.getSecureHash(password);
+		
+		Optional<User> user = this.userRepository.login(login, password);
+		if(user.isPresent()) {
+			userDTO = ModelMapperUtil.converter(user.get(), UserDTO.class);
+		}
+		return userDTO;
 	}
 }

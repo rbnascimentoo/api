@@ -76,4 +76,12 @@ public class UserResource {
 	public void deleteById(@PathVariable(value = "id") Long id) {
 		this.userService.deleteById(id);
 	}
+	
+	@ApiOperation(value = "Find user by login and password.")
+	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Response<UserDTO>> login(@RequestBody UserDTO userDto) {
+		Response<UserDTO> response = new Response<UserDTO>();
+		response.setData(this.userService.login(userDto.getLogin(), userDto.getPassword()));
+		return ResponseEntity.ok(response);
+	}
 }
