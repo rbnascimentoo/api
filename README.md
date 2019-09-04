@@ -23,6 +23,3 @@ Para executar o projeto as seguintes ferramentas devem estar instaladas:
 <ul>Apache Maven.</ul>
 <ul>Project Lombok.</ul>
 </li>
-
-SWAGGER
-http://localhost:8080/swagger-ui.html
