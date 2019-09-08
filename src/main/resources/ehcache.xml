@@ -9,6 +9,12 @@
 		<pinning store="localMemory" />
 	</cache>
 	
+	<cache name="findAllUserPaginator" maxEntriesLocalHeap="10000"
+		timeToLiveSeconds="300" eternal="false"
+		memoryStoreEvictionPolicy="LRU">
+		<pinning store="localMemory" />
+	</cache>
+	
 	<cache name="findByIdUser" maxEntriesLocalHeap="10000"
 		timeToLiveSeconds="300" eternal="false"
 		memoryStoreEvictionPolicy="LRU">

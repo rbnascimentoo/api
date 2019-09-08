@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.rnascimento.api.dtos.UserDTO;
+import br.com.rnascimento.api.dtos.UserSaveUpdateDTO;
 import br.com.rnascimento.api.entities.User;
 import br.com.rnascimento.api.enums.Role;
 import br.com.rnascimento.api.enums.State;
@@ -47,30 +48,30 @@ public class UserServiceTest {
 
 	@Test
 	public void updateUsers() {
-
+		Long id = 1L;
 		String password = "password";
 		String passwordHash = HashUtil.getSecureHash(password);
 
 		User userCreation = User.builder().name("User Test").login("login").password(passwordHash)
+				.build();
+
+		User userCreated = User.builder().id(id).name("User Test").login("login").password(passwordHash)
 				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
 
-		User userCreated = User.builder().id(1L).name("User Test").login("login").password(passwordHash)
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
+		UserSaveUpdateDTO userDto = UserSaveUpdateDTO.builder().name("User Test").login("login").password("password")
+				.build();
 
-		UserDTO userDto = UserDTO.builder().name("User Test").login("login").password("password")
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
-
-		User userUpdate = User.builder().id(1L).name("User updated").login("login").password(passwordHash)
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
-		UserDTO userUpdateDto = UserDTO.builder().id(1L).name("User updated").login("login").password("password")
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
+		User userUpdate = User.builder().id(id).name("User updated").login("login").password(passwordHash)
+				.build();
+		UserSaveUpdateDTO userUpdateDto = UserSaveUpdateDTO.builder().name("User updated").login("login").password("password")
+				.build();
 
 		Mockito.when(this.userRepository.save(userCreation)).thenReturn(userCreated);
-		UserDTO userDTOReturn = this.userSevice.saveOrUpdate(userDto);
+		UserDTO userDTOReturn = this.userSevice.save(userDto);
 		Mockito.verify(this.userRepository).save(userCreation);
 
 		Mockito.when(this.userRepository.save(userUpdate)).thenReturn(userUpdate);
-		UserDTO userUpdateDTOReturn = this.userSevice.saveOrUpdate(userUpdateDto);
+		UserDTO userUpdateDTOReturn = this.userSevice.update(id, userUpdateDto);
 		Mockito.verify(this.userRepository).save(userUpdate);
 
 		Assert.assertTrue(userUpdateDTOReturn.getName().equals(userUpdate.getName()));
@@ -83,17 +84,17 @@ public class UserServiceTest {
 		String passwordHash = HashUtil.getSecureHash(password);
 
 		User userCreation = User.builder().name("User Test").login("login").password(passwordHash)
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
+				.build();
 
 		User userCreated = User.builder().id(1L).name("User Test").login("login").password(passwordHash)
 				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
 
-		UserDTO userDto = UserDTO.builder().name("User Test").login("login").password("password")
-				.role(Role.ADMINISTRATOR).state(State.ACTIVE).build();
+		UserSaveUpdateDTO userDto = UserSaveUpdateDTO.builder().name("User Test").login("login").password("password")
+				.build();
 
 		Mockito.when(this.userRepository.save(userCreation)).thenReturn(userCreated);
 
-		UserDTO userDTOReturn = this.userSevice.saveOrUpdate(userDto);
+		UserDTO userDTOReturn = this.userSevice.save(userDto);
 
 		Mockito.verify(this.userRepository).save(userCreation);
 

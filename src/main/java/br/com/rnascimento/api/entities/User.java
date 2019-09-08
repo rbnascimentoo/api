@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.rnascimento.api.enums.Role;
 import br.com.rnascimento.api.enums.State;
@@ -53,15 +56,17 @@ public class User implements Serializable {
 	@NotEmpty(message = "The login can not is empty.")
 	private String login;
 	
-	@Column(nullable = false, length = 75)
+	@JsonIgnore
+	@Column(nullable = false, length = 100)
 	@NotEmpty(message = "The password can not is empty.")
+	@Size(min = 6, max = 99, message = "password must be between 6 and 99")
 	private String password;
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, updatable = false)
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	@Column(name = "date_creation")
+	@Column(name = "date_creation", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreation;
 	
@@ -69,13 +74,16 @@ public class User implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateUpdate;
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, updatable = false)
 	@Enumerated(EnumType.STRING)
 	private State state;
 	
 	@PrePersist
 	public void prePersist() {
 		this.dateCreation = new Date();
+		if(this.role == null) {
+			this.role = Role.SIMPLE;
+		}
 		this.state = State.ACTIVE;
 	}
 	
