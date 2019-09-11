@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.rnascimento.api.entities.User;
 import br.com.rnascimento.api.enums.Role;
 import br.com.rnascimento.api.enums.State;
+import br.com.rnascimento.api.utils.HashUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,7 +29,10 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void saveUser() {
-		User user = new User(null, "Administrator", "Administrator", "admin", Role.ADMINISTRATOR, 
+		
+		String passwordHash = HashUtil.getSecureHash("admin12345");
+		
+		User user = new User(null, "Administrator", "administrator", passwordHash, Role.ADMINISTRATOR, 
 				null, null, null);
 		User createUser = this.userRepository.save(user);
 		
@@ -37,7 +41,10 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void updateUser() {
-		User user = new User(1L, "Administrator", "Administrator", "admin123", Role.ADMINISTRATOR, 
+		
+		String passwordHash = HashUtil.getSecureHash("admin12345");
+		
+		User user = new User(1L, "Administrator", "admin", passwordHash, Role.ADMINISTRATOR, 
 				new Date(), new Date(), State.ACTIVE);
 		User createUser = this.userRepository.save(user);
 		
@@ -63,11 +70,6 @@ public class UserRepositoryTest {
 		Optional<User> user = this.userRepository.login("Administrator", "admin123");
 		
 		Assert.assertThat(user, CoreMatchers.notNullValue());
-	}
-	
-	@Test
-	public void updateUserState() {
-		
 	}
 	
 	@Test

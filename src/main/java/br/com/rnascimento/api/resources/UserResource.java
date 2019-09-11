@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +51,9 @@ public class UserResource {
 	
 	@Autowired
 	private JwtManager jwtManager;
+	
+//	@Autowired
+//	private AccessManager accessManager;
 
 	@ApiOperation(value = "Find all users.")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,6 +63,7 @@ public class UserResource {
 		return ResponseEntity.ok(response);
 	}
 	
+	@Secured({"ROLE_ADMINISTRATOR"})
 	@ApiOperation(value = "Create a new user.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response<UserDTO>> create(@RequestBody UserSaveUpdateDTO userSaveDTO, BindingResult result){
@@ -70,6 +76,7 @@ public class UserResource {
 		return ResponseEntity.ok(response);
 	}
 	
+	@PreAuthorize("@accessManager.isOwner(#id)")
 	@ApiOperation(value = "Update an existing user.")
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response<UserDTO>> update(@PathVariable(value = "id") Long id, @Valid @RequestBody UserSaveUpdateDTO userDto, BindingResult result){
@@ -107,9 +114,6 @@ public class UserResource {
 		String login = userSecurity.getUsername();
 		List<String> roles = userSecurity.getAuthorities().stream().map(a -> a.getAuthority())
 				.collect(Collectors.toList());
-		
-		jwtManager.createToken(login, roles);
-		//
 		Response<String> response = new Response<String>();
 		response.setData(jwtManager.createToken(login, roles));
 		return ResponseEntity.ok(response);
@@ -118,14 +122,15 @@ public class UserResource {
 	@ApiOperation(value = "Find all users paginator.")
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response<PageModel<UserDTO>>> findAllPaginator(
-			@RequestParam(value = "page") int page,
-			@RequestParam(value = "size") int size) {
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) {
 		PageRequestModel pageRequest = new PageRequestModel(page, size);
 		Response<PageModel<UserDTO>> response = new Response<PageModel<UserDTO>>();
 		response.setData(this.userService.listAllUserPaginator(pageRequest));
 		return ResponseEntity.ok(response);
 	}
 	
+	@Secured({"ROLE_ADMINISTRATOR"})
 	@ApiOperation(value = "Update role an existing user.")
 	@PatchMapping(value = "/role/{id}")
 	public ResponseEntity<Response<?>> updateUserRole(
@@ -135,6 +140,6 @@ public class UserResource {
 		Response<Integer> response = new Response<Integer>();
 		response.setData(this.userService.updateUserRole(userDto));
 		return ResponseEntity.ok(response);
-		
 	}
+	
 }

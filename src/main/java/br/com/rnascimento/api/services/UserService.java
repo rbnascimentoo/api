@@ -153,12 +153,13 @@ public class UserService implements UserDetailsService {
 	 */
 	@CacheEvict(allEntries = true, value = {"findAllUser", "findByIdUser"}, beforeInvocation = true)
 	public int updateUserRole(UserDTO userDto) {
+		LOG.info("### Update User Role... ###");
 		return this.userRepository.updateRole(userDto.getId(), userDto.getRole());
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		LOG.info("### Load User By Username... ###");
 		Optional<User> result = this.userRepository.findByLogin(username);
 		
 		if(!result.isPresent()) {
