@@ -1,5 +1,3 @@
 language: java
-script:
- - mvn clean compile install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 jdk:
  - openjdk8
