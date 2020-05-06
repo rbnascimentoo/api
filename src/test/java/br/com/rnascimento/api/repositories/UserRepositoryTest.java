@@ -34,9 +34,17 @@ public class UserRepositoryTest {
 		
 		User user = new User(null, "Administrator", "administrator", passwordHash, Role.ADMINISTRATOR, 
 				null, null, null);
-		User createUser = this.userRepository.save(user);
-		
-		Assert.assertThat(createUser.getId(), CoreMatchers.notNullValue());
+
+		Optional<User> userDB = this.userRepository.findById(1L);
+
+		if(userDB.isPresent()) {
+			Assert.assertThat(user, CoreMatchers.notNullValue());
+		}
+		else {
+			User createUser = this.userRepository.save(user);
+
+			Assert.assertThat(createUser.getId(), CoreMatchers.notNullValue());
+		}
 	}
 	
 	@Test

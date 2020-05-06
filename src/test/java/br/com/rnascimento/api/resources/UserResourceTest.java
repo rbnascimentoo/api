@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,11 +24,14 @@ import br.com.rnascimento.api.dtos.UserLoginDTO;
 import br.com.rnascimento.api.services.UserService;
 import br.com.rnascimento.api.utils.HashUtil;
 
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserResourceTest {
-	
+
+	@LocalServerPort
+	private int port;
+
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
@@ -39,9 +44,9 @@ public class UserResourceTest {
 		List<UserDTO> userDTOList = Arrays.asList(UserDTO.builder().id(1L).build(), UserDTO.builder().id(2L).build());
 		BDDMockito.when(this.userService.findAll()).thenReturn(userDTOList);
 		
-		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/", String.class);
+		ResponseEntity<String> response = this.restTemplate.getForEntity("http://localhost:" + port + "/user/", String.class);
 		
-		Assert.assertEquals(response.getStatusCodeValue(), 200);
+		Assert.assertEquals(200, response.getStatusCodeValue());
 	}
 	
 	@Ignore
@@ -50,9 +55,9 @@ public class UserResourceTest {
 		List<UserDTO> userDTOList = Arrays.asList(UserDTO.builder().id(1L).build(), UserDTO.builder().id(2L).build());
 		BDDMockito.when(this.userService.findAll()).thenReturn(userDTOList);
 		
-		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/list?page=" + 0 +"&size=" + 5, String.class);
+		ResponseEntity<String> response = this.restTemplate.getForEntity("http://localhost:" + port + "/user/list?page=" + 0 +"&size=" + 5, String.class);
 		
-		Assert.assertEquals(response.getStatusCodeValue(), 200);
+		Assert.assertEquals(200, response.getStatusCodeValue());
 	}
 	
 	@Ignore
@@ -62,12 +67,12 @@ public class UserResourceTest {
 		UserDTO userDTO = UserDTO.builder().id(id).build();
 		BDDMockito.when(this.userService.findById(id)).thenReturn(userDTO);
 		
-		ResponseEntity<String> response = this.restTemplate.getForEntity("/user/" + id, String.class);
+		ResponseEntity<String> response = this.restTemplate.getForEntity("http://localhost:" + port + "/user/" + id, String.class);
 		
-		Assert.assertEquals(response.getStatusCodeValue(), 200);
+		Assert.assertEquals(200, response.getStatusCodeValue());
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void deleteUserById() {
 		Long id = 1L;
@@ -79,16 +84,16 @@ public class UserResourceTest {
 	@Test
 	public void findUserByLoginAndPassword() {
 		String login = "Administrator";
-		String password = "administrator";
+		String password = "admin12345";
 		String passwordHash = HashUtil.getSecureHash(password);
 		
 		UserLoginDTO userDTO = UserLoginDTO.builder().login(login).password(password).build();
 		UserDTO userDTOReturn = UserDTO.builder().login(login).password(passwordHash).build();
 		BDDMockito.when(this.userService.login(login, password)).thenReturn(userDTOReturn);
 		
-		ResponseEntity<UserDTO> response = this.restTemplate.postForEntity("/user/login", userDTO, UserDTO.class);
+		ResponseEntity<UserDTO> response = this.restTemplate.postForEntity("http://localhost:" + port + "/user/login", userDTO, UserDTO.class);
 		
-		Assert.assertEquals(response.getStatusCodeValue(), 200);
+		Assert.assertEquals(200, response.getStatusCodeValue());
 	}
 	
 }
