@@ -46,10 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors();
+		http.cors().and().csrf().disable().authorizeRequests().anyRequest().authenticated();
 
-		http.csrf().disable().authorizeRequests().anyRequest().authenticated();
-		
 		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 	
@@ -64,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	{
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedHeaders(Arrays.asList("Origin",
+				"X-Requested-With", "Content-Type", "Accept", "Authorization"));
 		configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "PUT", "PATCH"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
