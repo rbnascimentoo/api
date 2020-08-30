@@ -29,8 +29,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Table(name = "user")
-@Entity(name = "user")
+@Table(name = "tb_user")
+@Entity
 @Data
 @Builder
 @AllArgsConstructor

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserSaveUpdateDTO implements Serializable {
 
 	/**
@@ -28,9 +30,6 @@ public class UserSaveUpdateDTO implements Serializable {
 	
 	@NotBlank(message = "The login can not is empty.")
 	private String login;
-	
-	@NotBlank
-	@Size(min = 6, max = 99, message = "password must be between 6 and 99")
-	private String password;
+
 	
 }

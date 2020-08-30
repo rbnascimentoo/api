@@ -2,6 +2,7 @@ package br.com.rnascimento.api.security;
 
 import java.util.Optional;
 
+import br.com.rnascimento.api.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,19 @@ public class AccessManager {
 		}
 		
 		return user.get().getId().equals(id);
+	}
+
+	//TODO PALEATIVO
+	public boolean isAdmin(Long id) throws NotFoundException {
+		String login = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		Optional<User> user = this.userRepository.findByLogin(login);
+
+		if(!user.isPresent()) {
+			throw new NotFoundException("There are not user with login = " + login);
+		}
+
+		return Role.ADMINISTRATOR.equals(user.get().getRole());
 	}
 	
 }

@@ -1,23 +1,5 @@
 package br.com.rnascimento.api.resources;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
 import br.com.rnascimento.api.dtos.UserDTO;
 import br.com.rnascimento.api.dtos.UserLoginDTO;
 import br.com.rnascimento.api.dtos.UserSaveUpdateDTO;
@@ -28,6 +10,21 @@ import br.com.rnascimento.api.security.JwtManager;
 import br.com.rnascimento.api.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Api(value = "user", tags = "Users", description = "Endpoints of Users")
@@ -55,7 +52,7 @@ public class UserResource {
 		return ResponseEntity.ok(response);
 	}
 	
-	@Secured({"ROLE_ADMINISTRATOR"})
+//	@Secured({"ROLE_ADMINISTRATOR"})
 	@ApiOperation(value = "Create a new user.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response<UserDTO>> create(@RequestBody UserSaveUpdateDTO userSaveDTO, BindingResult result){
@@ -68,7 +65,7 @@ public class UserResource {
 		return ResponseEntity.ok(response);
 	}
 	
-	@PreAuthorize("@accessManager.isOwner(#id)")
+	@PreAuthorize("@accessManager.isOwner(#id) || @accessManager.isAdmin(#id)")
 	@ApiOperation(value = "Update an existing user.")
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response<UserDTO>> update(@PathVariable(value = "id") Long id, @Valid @RequestBody UserSaveUpdateDTO userDto, BindingResult result){
@@ -108,6 +105,7 @@ public class UserResource {
 				.collect(Collectors.toList());
 		Response<String> response = new Response<String>();
 		response.setData(jwtManager.createToken(login, roles));
+
 		return ResponseEntity.ok(response);
 	}
 	
@@ -122,7 +120,7 @@ public class UserResource {
 		return ResponseEntity.ok(response);
 	}
 	
-	@Secured({"ROLE_ADMINISTRATOR"})
+//	@Secured({"ROLE_ADMINISTRATOR"})
 	@ApiOperation(value = "Update role an existing user.")
 	@PatchMapping(value = "/role/{id}")
 	public ResponseEntity<Response<?>> updateUserRole(
