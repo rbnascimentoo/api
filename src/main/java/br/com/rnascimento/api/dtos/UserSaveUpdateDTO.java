@@ -31,5 +31,7 @@ public class UserSaveUpdateDTO implements Serializable {
 	@NotBlank(message = "The login can not is empty.")
 	private String login;
 
+	@NotBlank(message = "The password can not is empty.")
+	private String password;
 	
 }
